@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import {
   Card,
   CardAction,
@@ -13,6 +13,10 @@ import { Input } from './ui/input'
 import { Button } from './ui/button'
 import { BeatLoader } from 'react-spinners'
 import Error from './error'
+import useFetch from '@/hooks/use-fetch'
+import { login } from '@/db/apiAuth'
+import { useNavigate } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom'
 
 const Login = () => {
 
@@ -23,6 +27,10 @@ const Login = () => {
     password:""
   });
 
+  const navigate = useNavigate()
+  let [searchParams] = useSearchParams();
+  const longLink = searchParams.get("createNew")
+
   const handleInputChange = (e)=>{
     const {name,value} = e.target
     setFormData((prevState) =>({
@@ -30,6 +38,16 @@ const Login = () => {
       [name]: value,
     }));
   };
+
+  const {data, error, loading, fn:fnLogin}=useFetch(login,formData)
+
+  useEffect(()=>{
+    console.log(data);
+    if(error===null && data) {
+        navigate(`/dashboard?${longLink ? `createNew=${longLink}`:""}`)
+    }
+    
+  },[data,error])
 
   const handleLogin = async() =>{
     setErrors({});
@@ -40,6 +58,7 @@ const Login = () => {
       });
       await schema.validate(formData,{abortEarly:false})
 
+      await fnLogin()
     } catch (e) {
       const newErrors = {};
       e?.inner?.forEach((err)=>{
@@ -55,7 +74,7 @@ const Login = () => {
       <CardHeader>
         <CardTitle>Login</CardTitle>
         <CardDescription>Already have one?</CardDescription>
-        <Error message={"some error"}/>
+        {error && <Error message={error.message}/>}
       </CardHeader>
       <CardContent className="space-y-2">
         <div className="space-y-1">
@@ -69,7 +88,7 @@ const Login = () => {
       </CardContent>
       <CardFooter>
         <Button onClick={handleLogin}>
-          {true? <BeatLoader size={10} color="#36d7b7"/>:"Login"}
+          {loading? <BeatLoader size={10} color="#36d7b7"/>:"Login"}
         </Button>
       </CardFooter>
     </Card>
