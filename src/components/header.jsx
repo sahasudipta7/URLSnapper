@@ -6,7 +6,7 @@ import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { LinkIcon, LogOut } from 'lucide-react'
 const Header = () => {
     const navigate = useNavigate()
-    const user = true;
+    const user = false;
   return (
     <nav className='py-4 flex justify-between items-center'>
         <Link to="/">
