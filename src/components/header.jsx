@@ -4,10 +4,16 @@ import { Button } from './ui/button'
 import { DropdownMenu,DropdownMenuContent,DropdownMenuTrigger,DropdownMenuLabel,DropdownMenuSeparator,DropdownMenuItem } from '@radix-ui/react-dropdown-menu'
 import { Avatar, AvatarFallback, AvatarImage } from '@radix-ui/react-avatar'
 import { LinkIcon, LogOut } from 'lucide-react'
+import { UrlState } from '@/context'
+import useFetch from '@/hooks/use-fetch'
+import { logout } from '@/db/apiAuth'
+import { BarLoader } from 'react-spinners'
 const Header = () => {
     const navigate = useNavigate()
-    const user = false;
+    const {user,fetchUser} = UrlState()
+    const {loading,fn:fnLogout}=useFetch(logout)
   return (
+  <>
     <nav className='py-4 flex justify-between items-center'>
         <Link to="/">
         <img src="/URLSnapper_Black_White_New_Scissor.png" className='h-16' alt="Snapper Logo"/>
@@ -19,12 +25,12 @@ const Header = () => {
             <DropdownMenu>
                 <DropdownMenuTrigger className='w-10 rounded-flow overflow-hidden'>
                     <Avatar>
-                        <AvatarImage src="https://github.com/shadcn.png" className='h-10'/>
+                        <AvatarImage src={user?.user_metadata?.profile_pic} className='object-contain'/>
                         <AvatarFallback>SS</AvatarFallback>
                     </Avatar>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent>
-                <DropdownMenuLabel>Sudipta Saha</DropdownMenuLabel>
+                <DropdownMenuLabel>{user?.user_metadata?.name}</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className='flex items-center'>
                     <LinkIcon className='mr-2 h-4 w-4'/>
@@ -32,7 +38,12 @@ const Header = () => {
                 </DropdownMenuItem>
                 <DropdownMenuItem className='text-red-400 flex items-center'>
                     <LogOut className='mr-2 h-4 w-4'/>
-                    <span>
+                    <span onClick={()=>{
+                        fnLogout().then(()=>{
+                            fetchUser()
+                            navigate("/")
+                        })                    
+                    }}>
                         Logout
                     </span>
                 </DropdownMenuItem>
@@ -42,6 +53,8 @@ const Header = () => {
         }
         </div>
     </nav>
+    {loading && <BarLoader className='mb-4' width={"100%"} color='#36d7b7'/>}
+  </>
   )
 }
 
