@@ -5,16 +5,17 @@ import Header from '@/components/header'
 const AppLayout = () => {
   return (
     <div>
-      <main className='min-h-screen container'>
+      <main className='min-h-screen w-full'>
+         <div className="container mx-auto px-6">
         <Header/>
         <Outlet/>
-        
-        {/* <div className="p-10 text-center !bg-gray-800 mt-10 text-white">
-            Made with love , rai
-        </div> */}
+        </div>
       </main>
         <footer className="p-10 text-center bg-gray-800 mt-10 text-white">
-            Made with love , rai
+            URLSnapper • Shorten, share, and track your links  
+            @ 2026 URLSnapper.  
+            Privacy • Terms • Contact
+
         </footer>
 
     </div>
