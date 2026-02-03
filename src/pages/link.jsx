@@ -79,7 +79,8 @@ const Link = () => {
           <a href={`https://URLSnapper.in/${link}`}
            target="_blank"
            className='min-w-0 max-w-full break-all text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer'
-           >https://URLSnapper.in/{link}</a>
+           >https://url-snapper.vercel.app
+/{link}</a>
           <a href={url?.original_url} 
           target="_blank"
            className='min-w-0 max-w-full break-all flex items-center gap-1 hover:underline cursor-pointer'
