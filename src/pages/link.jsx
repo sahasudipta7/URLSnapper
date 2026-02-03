@@ -96,7 +96,7 @@ const Link = () => {
             >
                 <Copy/>
             </Button>
-            <Button variant="ghost" onClick={downloadImage}>
+            <Button variant="ghost" onClick={downloadImage()}>
                 <Download/>
             </Button>
             <Button variant="ghost" onClick={()=>fnDelete()}>
