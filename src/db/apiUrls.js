@@ -63,7 +63,7 @@ export async function createUrl({title, longUrl, customUrl, user_id}, qrcode) {
     return data;
 }
 
-export async function getLongUrl(id) {
+export async function getLongUrl({title}) {
     const {data,error} = await supabase
     .from("urls")
     .select("id,original_url")
@@ -93,3 +93,4 @@ export async function getUrl({id,user_id}) {
 
     return data;
 }
+

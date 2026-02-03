@@ -76,11 +76,11 @@ const Link = () => {
           <span className='text-6xl font-extrabold hover:underline cursor-pointer'>
             {url?.title}
           </span>
-          <a href={`https://URLSnapper.in/${link}`}
+          <a href={`https://url-snapper.vercel.app/${link}`}
            target="_blank"
            className='min-w-0 max-w-full break-all text-3xl sm:text-4xl text-blue-400 font-bold hover:underline cursor-pointer'
-           >https://url-snapper.vercel.app
-/{link}</a>
+           >https://URLSnapper.in/
+{link}</a>
           <a href={url?.original_url} 
           target="_blank"
            className='min-w-0 max-w-full break-all flex items-center gap-1 hover:underline cursor-pointer'
@@ -91,7 +91,7 @@ const Link = () => {
            <div className='flex gap-2'>
             <Button variant="ghost"
                 onClick={() => 
-                    navigator.clipboard.writeText(`https://URLSnapper.in/${url?.short_url}`)
+                    navigator.clipboard.writeText(`https://url-snapper.vercel.app/${url?.short_url}`)
                 }
             >
                 <Copy/>
